@@ -1,0 +1,26 @@
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse.BodyHandlers;
+
+public class ClienteHttp {
+    
+    public String buscaDados(String url){
+       try {
+        var endereco = URI.create(url);
+
+        var client = HttpClient.newHttpClient();
+
+        // buscar dados da API
+        var request = HttpRequest.newBuilder(endereco).GET().build();
+
+        var response = client.send(request, BodyHandlers.ofString());
+
+        return response.body();
+        
+       } catch (IOException | InterruptedException e) {
+        throw new RuntimeException(e);
+       }
+    }
+}
